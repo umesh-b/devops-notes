@@ -70,3 +70,12 @@ git push --tags
 
 # Checkout data using tags
 git checkout v.1.0
+
+# To push brach data on remote
+git push --set-upstream origin testing
+
+# To show tag with veriosn
+git show v.1.0
+
+# To push tags on remote
+git push origin --tags
