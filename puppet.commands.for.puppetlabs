@@ -1,0 +1,50 @@
+Puppet
+----------------------------------------------------------------
+
+# Package name of master
+puppetserver
+
+# Package naem of client
+puppet-agent
+
+# service name on master
+puppetserver
+
+# service name on client
+puppet
+
+# Error - OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0
+comment the MaxPermSize line in /etc/sysconfig/puppetserver file
+
+# To generate certificate on agen for master
+puppet agent --test
+
+# To list certificates on master
+puppet cert list
+
+# To sign certificate of agent1
+puppet cert sign agent1
+
+# To sign certificate of all agents
+puppet cert sign -all
+
+# To check puppet agent settings
+puppet agent --configprint all
+
+# To check runtimeinterval of puppet agent
+puppet agent --configprint runinterval
+
+# Default manifest location
+puppet config print manifest
+
+# to run puppet manifest
+puppet apply test.pp
+
+# to check syntax
+puppet parser validate test.pp
+
+# Man page for modules
+puppet describe file
+
+# to do nothing and just to check
+puppet resource service httpd --noop

@@ -1,2 +1,1 @@
-# devops-notes
-DevOps Notes by Umesh
+Welcome to Bhatia Github

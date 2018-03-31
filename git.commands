@@ -1,0 +1,72 @@
+Client Commands:
+--------------------------------------------
+
+# clone directory of master on client 
+git clone ssh://master/bhatia.github
+
+# Create file in directory once client cloned with master
+touch git-notes
+
+# Add git-notes file to master repository
+git add git-notes
+
+# Provide user name to git client
+git config --global user.name "Umesh Bhatia"
+
+# Provide email ID for git client
+git config --global user.email "umeshbhatia47@gmail.com"
+
+# can push all branches or a single one dependent on below configuration:
+git push 
+
+	Push all branches
+
+	$ git config --global push.default matching
+	It will push all the branches to the remote branch and would merge them. 
+	If you don't want to push all branches, you can push the current branch only.
+
+	Push only the current branch
+
+	$ git config --global push.default simple
+	So, it's better, in my opinion, to use this option and push your code branch by branch. 
+	It's better to push branches manually and individually.
+
+# Commit changes
+git commit -m "Adding Read Me file"
+
+# Fetch from and integrate with another repository or a local branch
+git pull
+
+# push all branches
+git push --all
+
+# Check git status
+git status
+
+# To check branches 
+git branch
+
+# To create new branch
+git branch testing
+
+# To switch to testing branch
+git checkout testing
+
+# To check logs by ID
+git log --oneline
+
+# To check graphical view of logs 
+git log --oneline --graph --decorate --all
+git log --oneline --graph --all
+
+# To fetch form master
+git fetch
+
+# Using tag to make version of repository
+git tag -a v.10 -m "Tag name"
+
+# Push data to remote using tags
+git push --tags
+
+# Checkout data using tags
+git checkout v.1.0
