@@ -1,0 +1,131 @@
+Docker
+========================================================================================
+Process ID 1 of any container is very critical. If we stop that process, container will stop
+
+1. To search docker image in repository
+# docker search container-name
+
+2. To check downloaded images
+# docker images
+
+3. To check running docker containers
+# docker ps
+
+4. To check all docker containers on system
+# docker ps -a
+
+5. To check container configuration like IP, gateway etc.
+# docker inspect docker-name
+
+6. To run a container
+# docker run -it --name fedora-web -d fedora /bin/bash
+# docker run -it --net my_network ubuntu:14.04
+# docker run -it -p 8080:80 --name apache2-web apache2:1.1   
+docker run -it --name ubutnu-mem -m 500M -d ubuntu /bin/bash
+-d -- to run container in backgroud
+-p -- to map host ports with container port
+-i -- Keep STDIN open even if not attached
+-m -- to set memory limit
+
+7. To build image using running container
+# docker commit -m "ubuntu-db image" ubuntu-db umeshso/ubuntu-db:1.0
+
+8. To create our own network
+# docker network create my_network
+# docker network ls
+
+9. To remove container
+# docker rm container-ID/container-name
+
+10. To remove container image
+# docker rmi container-ID
+
+11. To build docker from Dockerfile
+# docker build -t apache2:1.1 .        --- -t is used to tag the image
+
+12. To execute command in docker
+# docker exec -it ubuntu-db mysqladmin status
+#  docker exec -it ubuntu-web service apache2 status
+
+13. To login into container
+# docker attach ubuntu-db
+
+14. To start and stop container
+# docker start container-name/ID
+# docker stop container-name/ID
+
+15. To download and upload image from repo
+# docker pull image-name
+# docker push image-name
+
+16. To check stats
+# docker stats --all
+
+CONTAINER           CPU %               MEM USAGE / LIMIT      MEM %               NET I/O             BLOCK I/O           PIDS
+6c5485af8267        0.03%               336 MiB / 1.953 GiB    16.80%              1.11 MB / 1.97 MB   383 MB / 144 MB     34
+c05ba59feed4        0.00%               78.1 MiB / 1.953 GiB   3.90%               96.1 MB / 12.7 MB   147 MB / 204 MB     12
+
+17. To monitor container
+# docker logs container-ID
+# docker top container-ID
+
+18. To check docker info
+# docker info
+
+19. Enable swappiness 
+# add below line /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory swapaccount=1"
+# update-grub
+
+20. To update resources
+docker update --cpuset-cpus "1" --memory "1g" docker-id
+
+21. Build parameters
+FROM: - Base image to be used 
+RUN: - allows you to install your application and packages required for it.
+CMD: - the command the container executes by default when you launch the built image. Dockerfile have only one CMD.
+COPY: - copy files from main host to container
+WORKDIR: - Set the current working directory
+EXPOSE: - Ports to open 
+ENV: - to update the PATH environment variable for the software your container installs
+USER - to add user and group into container
+ENTRYPOINT: - should be defined when using the container as an executable.
+CMD is the default argument to container. Without entrypoint, default argument is command that is executed. With entrypoint, cmd is passed to entrypoint as argument.
+The ENTRYPOINT specifies a command that will always be executed when the container starts. The CMD specifies arguments that will be fed to the ENTRYPOINT.
+
+Example: -----------------------------------------------------------------------------------------------------------------
+FROM ubuntu
+MAINTAINER umesh.bhatia@ucsf.edu
+EXPOSE 80 443
+RUN mkdir /data
+WORKDIR /data
+RUN apt-get update && apt-get install -y apache2
+RUN service apache2 start
+COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
+CMD [ "/bin/bash" ]
+
+22. Swarm
+To initialize: - 
+# docker swarm init --advertise-addr 192.168.56.101
+To check swarm configuration: - 
+# docker info
+To join worker in cluster: -
+# docker swarm join-token worker
+To join manager in cluster: - 
+# docker swarm join-token manager
+To create service in cluster: - 
+# docker service create -p 8080:80 --name webserver nginx
+To create replicas for services: - 
+# docker service create --name replicated_service --replicas 3 nginx
+To create service globally on all nodes: - 
+# docker service create --name global_service --mode global nginx
+To list services running on cluster: -
+# docker service ls
+To check nodes for services: - 
+# docker service ps global_service
+To increase replicas: - 
+# docker service scale replicated_service=5
+To check info of services running on cluster: - 
+# docker service inspect --pretty replicated_service
+To remove services: -
+# docker service rm webserver
